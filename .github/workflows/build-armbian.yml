@@ -12,7 +12,7 @@ on:
       set_release:
         description: "Select OS Release."
         required: false
-        default: "jammy"
+        default: "bookworm"
         type: choice
         options:
           - jammy
@@ -22,7 +22,7 @@ on:
       armbian_board:
         description: "Select device board."
         required: false
-        default: "all"
+        default: "hejiaqin"
         type: choice
         options:
           - all
@@ -50,6 +50,7 @@ on:
           - h88k
           - h88k-v3
           - h96-max-m2
+          - hejiaqin
           - hs530r
           - hugsun-x99
           - ipc-r
@@ -173,7 +174,7 @@ on:
       armbian_kernel:
         description: "Select kernel version."
         required: false
-        default: "6.1.y_6.6.y"
+        default: "6.1.y"
         type: choice
         options:
           - 5.4.y
@@ -191,10 +192,11 @@ on:
       kernel_repo:
         description: "Set the kernel repository."
         required: false
-        default: "ophub/kernel"
+        default: "pjw66/kernel"
         type: choice
         options:
           - ophub/kernel
+          - pjw66/kernel
       kernel_usage:
         description: "Set the tags of the stable kernel."
         required: false
@@ -205,6 +207,7 @@ on:
           - flippy
           - dev
           - beta
+          - rk35xx
       armbian_fstype:
         description: "Select armbian rootfs type."
         required: false
@@ -224,12 +227,12 @@ on:
       builder_name:
         description: "Set Armbian builder signature."
         required: false
-        default: "ophub"
+        default: "pjw66"
         type: choice
         options:
           - ophub
           - angel
-          - yourname
+          - pjw66
 
 env:
   TZ: America/New_York
@@ -292,7 +295,7 @@ jobs:
           df -hT ${PWD}
           git clone -q --single-branch --depth=1 --branch=main https://github.com/armbian/build.git build
           ln -sf /builder/build ${GITHUB_WORKSPACE}/build
-          ln -sf /builder/build /home/runner/work/_actions/ophub/amlogic-s9xxx-armbian/main/build
+          ln -sf /builder/build /home/runner/work/_actions/pjw66/amlogic-s9xxx-armbian/main/build
           echo "status=success" >> ${GITHUB_OUTPUT}
 
       - name: Compile Armbian [ ${{ inputs.set_release }} ]
@@ -330,7 +333,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Rebuild Armbian
-        uses: ophub/amlogic-s9xxx-armbian@main
+        uses: pjw66/amlogic-s9xxx-armbian@main
         if: ${{ steps.clean.outputs.status }} == 'success' && !cancelled()
         with:
           build_target: armbian
