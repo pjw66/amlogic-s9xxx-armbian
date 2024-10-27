@@ -283,8 +283,6 @@ check_data() {
     else
         board_list=":($(echo ${build_board} | sed -e 's/_/\|/g')):(yes|no)"
         build_armbian=($(echo ${build_board} | sed -e 's/_/ /g'))
-        echo -e "board_list is ${board_list}"
-        echo -e "build_armbian is ${build_armbian}"
     fi
     [[ "${#build_armbian[@]}" -eq 0 ]] && error_msg "The [ BOARD ] is missing, stop building."
 
