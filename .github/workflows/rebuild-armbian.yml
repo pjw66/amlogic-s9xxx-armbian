@@ -36,6 +36,7 @@ on:
           - emb3531
           - fine3399
           - firefly-rk3399
+          - fmx1_pro
           - jp-tvbox
           - h28k
           - h66k
